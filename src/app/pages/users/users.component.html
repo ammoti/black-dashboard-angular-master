@@ -1,0 +1,227 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title fancy-title">
+            <span class="title-text">Users</span>
+          </h4>
+          <button class="btn btn-primary btn-round" (click)="openAddUserModal(addUserModal)">
+            <i class="tim-icons icon-simple-add"></i> Add User
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table tablesorter">
+              <thead class="text-primary">
+                <tr>
+                  <th>Username</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Company</th>
+                  <th>City</th>
+                  <th>Country</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.firstName }} {{ user.lastName }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.company }}</td>
+                  <td>{{ user.city }}</td>
+                  <td>{{ user.country }}</td>
+                  <td>
+                    <button class="btn btn-warning btn-sm" (click)="openEditUserModal(editUserModal, user)">
+                      <i class="tim-icons icon-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteUser(user.id)">
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addUserModal let-modal>
+  <div class="modal-content bg-dark text-white">
+    <div class="modal-header border-0">
+      <h5 class="modal-title text-white" id="modal-basic-title">Add New User</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="row">
+          <div class="col-md-5 pr-md-1">
+            <div class="form-group">
+              <label>Company</label>
+              <input class="form-control bg-darker text-white" placeholder="Company" type="text" [(ngModel)]="newUser.company" name="company">
+            </div>
+          </div>
+          <div class="col-md-3 px-md-1">
+            <div class="form-group">
+              <label>Username</label>
+              <input class="form-control bg-darker text-white" placeholder="Username" type="text" [(ngModel)]="newUser.username" name="username">
+            </div>
+          </div>
+          <div class="col-md-4 pl-md-1">
+            <div class="form-group">
+              <label>Email address</label>
+              <input class="form-control bg-darker text-white" placeholder="mike@email.com" type="email" [(ngModel)]="newUser.email" name="email">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 pr-md-1">
+            <div class="form-group">
+              <label>First Name</label>
+              <input class="form-control bg-darker text-white" placeholder="First Name" type="text" [(ngModel)]="newUser.firstName" name="firstName">
+            </div>
+          </div>
+          <div class="col-md-6 pl-md-1">
+            <div class="form-group">
+              <label>Last Name</label>
+              <input class="form-control bg-darker text-white" placeholder="Last Name" type="text" [(ngModel)]="newUser.lastName" name="lastName">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Address</label>
+              <input class="form-control bg-darker text-white" placeholder="Home Address" type="text" [(ngModel)]="newUser.address" name="address">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 pr-md-1">
+            <div class="form-group">
+              <label>City</label>
+              <input class="form-control bg-darker text-white" placeholder="City" type="text" [(ngModel)]="newUser.city" name="city">
+            </div>
+          </div>
+          <div class="col-md-4 px-md-1">
+            <div class="form-group">
+              <label>Country</label>
+              <input class="form-control bg-darker text-white" placeholder="Country" type="text" [(ngModel)]="newUser.country" name="country">
+            </div>
+          </div>
+          <div class="col-md-4 pl-md-1">
+            <div class="form-group">
+              <label>Postal Code</label>
+              <input class="form-control bg-darker text-white" placeholder="ZIP Code" type="number" [(ngModel)]="newUser.postalCode" name="postalCode">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label>About</label>
+              <textarea class="form-control bg-darker text-white" cols="80" placeholder="Here can be your description" rows="4" [(ngModel)]="newUser.about" name="about"></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer border-0">
+      <button type="button" class="btn btn-fill btn-danger" (click)="addUser()">Add User</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editUserModal let-modal>
+  <div class="modal-content bg-dark text-white">
+    <div class="modal-header border-0">
+      <h5 class="modal-title text-white" id="modal-basic-title">Edit User</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="row">
+          <div class="col-md-5 pr-md-1">
+            <div class="form-group">
+              <label>Company</label>
+              <input class="form-control bg-darker text-white" placeholder="Company" type="text" [(ngModel)]="editingUser.company" name="company">
+            </div>
+          </div>
+          <div class="col-md-3 px-md-1">
+            <div class="form-group">
+              <label>Username</label>
+              <input class="form-control bg-darker text-white" placeholder="Username" type="text" [(ngModel)]="editingUser.username" name="username">
+            </div>
+          </div>
+          <div class="col-md-4 pl-md-1">
+            <div class="form-group">
+              <label>Email address</label>
+              <input class="form-control bg-darker text-white" placeholder="mike@email.com" type="email" [(ngModel)]="editingUser.email" name="email">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 pr-md-1">
+            <div class="form-group">
+              <label>First Name</label>
+              <input class="form-control bg-darker text-white" placeholder="First Name" type="text" [(ngModel)]="editingUser.firstName" name="firstName">
+            </div>
+          </div>
+          <div class="col-md-6 pl-md-1">
+            <div class="form-group">
+              <label>Last Name</label>
+              <input class="form-control bg-darker text-white" placeholder="Last Name" type="text" [(ngModel)]="editingUser.lastName" name="lastName">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Address</label>
+              <input class="form-control bg-darker text-white" placeholder="Home Address" type="text" [(ngModel)]="editingUser.address" name="address">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 pr-md-1">
+            <div class="form-group">
+              <label>City</label>
+              <input class="form-control bg-darker text-white" placeholder="City" type="text" [(ngModel)]="editingUser.city" name="city">
+            </div>
+          </div>
+          <div class="col-md-4 px-md-1">
+            <div class="form-group">
+              <label>Country</label>
+              <input class="form-control bg-darker text-white" placeholder="Country" type="text" [(ngModel)]="editingUser.country" name="country">
+            </div>
+          </div>
+          <div class="col-md-4 pl-md-1">
+            <div class="form-group">
+              <label>Postal Code</label>
+              <input class="form-control bg-darker text-white" placeholder="ZIP Code" type="number" [(ngModel)]="editingUser.postalCode" name="postalCode">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label>About</label>
+              <textarea class="form-control bg-darker text-white" cols="80" placeholder="Here can be your description" rows="4" [(ngModel)]="editingUser.about" name="about"></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer border-0">
+      <button type="button" class="btn btn-fill btn-danger" (click)="updateUser()">Update User</button>
+    </div>
+  </div>
+</ng-template>

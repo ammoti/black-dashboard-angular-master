@@ -1,0 +1,104 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title fancy-title">
+            <span class="title-text">Roles</span>
+          </h4>
+          <button class="btn btn-primary btn-round" (click)="openAddRoleModal(addRoleModal)">
+            <i class="tim-icons icon-simple-add"></i> Add Role
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table tablesorter">
+              <thead class="text-primary">
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Permissions</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let role of roles">
+                  <td>{{ role.name }}</td>
+                  <td>{{ role.description }}</td>
+                  <td>{{ role.permissions.join(', ') }}</td>
+                  <td>
+                    <button class="btn btn-warning btn-sm" (click)="openEditRoleModal(editRoleModal, role)">
+                      <i class="tim-icons icon-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteRole(role.id)">
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addRoleModal let-modal>
+  <div class="modal-content bg-dark text-white">
+    <div class="modal-header border-0">
+      <h5 class="modal-title text-white" id="modal-basic-title">Add New Role</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label>Name</label>
+          <input class="form-control bg-darker text-white" placeholder="Role Name" type="text" [(ngModel)]="newRole.name" name="name">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control bg-darker text-white" placeholder="Role Description" rows="3" [(ngModel)]="newRole.description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Permissions</label>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer border-0">
+      <button type="button" class="btn btn-fill btn-danger" (click)="addRole()">Add Role</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editRoleModal let-modal>
+  <div class="modal-content bg-dark text-white">
+    <div class="modal-header border-0">
+      <h5 class="modal-title text-white" id="modal-basic-title">Edit Role</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label>Name</label>
+          <input class="form-control bg-darker text-white" placeholder="Role Name" type="text" [(ngModel)]="editingRole.name" name="name">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control bg-darker text-white" placeholder="Role Description" rows="3" [(ngModel)]="editingRole.description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Permissions</label>
+       
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer border-0">
+      <button type="button" class="btn btn-fill btn-danger" (click)="updateRole()">Update Role</button>
+    </div>
+  </div>
+</ng-template>

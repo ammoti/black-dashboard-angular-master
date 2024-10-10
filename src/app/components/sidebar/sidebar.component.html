@@ -1,0 +1,25 @@
+
+<div class="sidebar-wrapper">
+  <ul class="nav">
+    <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+      <a (click)="toggleSubItems(menuItem); $event.preventDefault()" 
+         class="nav-link" 
+         [routerLink]="!menuItem.subItems ? [menuItem.path] : null">
+        <i class="tim-icons {{menuItem.icon}}"></i>
+        <div class="nav-link-content">
+          <p>{{menuItem.title}}</p>
+          <span *ngIf="menuItem.subItems" class="submenu-indicator" 
+                [ngClass]="{'rotated': isExpanded(menuItem)}"></span>
+        </div>
+      </a>
+      <ul *ngIf="menuItem.subItems" class="nav-submenu" [ngClass]="{'expanded': isExpanded(menuItem)}">
+        <li *ngFor="let subItem of menuItem.subItems" class="{{subItem.class}} nav-item">
+          <a [routerLink]="[subItem.path]" class="nav-link">
+            <i class="tim-icons {{subItem.icon}}"></i>
+            <p>{{subItem.title}}</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

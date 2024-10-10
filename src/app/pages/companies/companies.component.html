@@ -1,0 +1,115 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title fancy-title">           
+            <span class="title-text">Şirketler</span>
+          </h4>
+          <button class="btn btn-primary btn-round" (click)="openAddCompanyModal(addCompanyModal)">
+            <i class="tim-icons icon-simple-add"></i> Şirket Ekle
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table tablesorter">
+              <thead class="text-primary">
+                <tr>
+                  <th>Şirket Adı</th>
+                  <th>Sektör</th>
+                  <th>Çalışan Sayısı</th>
+                  <th>Gelir</th>
+                  <th>İşlemler</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let company of companies">
+                  <td>{{ company.name }}</td>
+                  <td>{{ company.industry }}</td>
+                  <td>{{ company.employees }}</td>
+                  <td>{{ company.revenue }}</td>
+                  <td>
+                    <button class="btn btn-warning btn-sm" (click)="openEditCompanyModal(editCompanyModal, company)">
+                      <i class="tim-icons icon-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm ml-2" (click)="deleteCompany(company.id)">
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addCompanyModal let-modal>
+  <div class="modal-content bg-dark text-white">
+    <div class="modal-header border-0">
+      <h5 class="modal-title text-white" id="modal-basic-title">Yeni Şirket Ekle</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="companyName">Şirket Adı</label>
+          <input type="text" class="form-control bg-darker text-white" id="companyName" [(ngModel)]="newCompany.name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="industry">Sektör</label>
+          <input type="text" class="form-control bg-darker text-white" id="industry" [(ngModel)]="newCompany.industry" name="industry">
+        </div>
+        <div class="form-group">
+          <label for="employees">Çalışan Sayısı</label>
+          <input type="number" class="form-control bg-darker text-white" id="employees" [(ngModel)]="newCompany.employees" name="employees">
+        </div>
+        <div class="form-group">
+          <label for="revenue">Gelir</label>
+          <input type="text" class="form-control bg-darker text-white" id="revenue" [(ngModel)]="newCompany.revenue" name="revenue">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer border-0">
+      <button type="button" class="btn btn-primary" (click)="addCompany()">Ekle</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editCompanyModal let-modal>
+  <div class="modal-content bg-dark text-white">
+    <div class="modal-header border-0">
+      <h5 class="modal-title text-white" id="modal-basic-title">Şirket Düzenle</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="editCompanyName">Şirket Adı</label>
+          <input type="text" class="form-control bg-darker text-white" id="editCompanyName" [(ngModel)]="editingCompany.name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="editIndustry">Sektör</label>
+          <input type="text" class="form-control bg-darker text-white" id="editIndustry" [(ngModel)]="editingCompany.industry" name="industry">
+        </div>
+        <div class="form-group">
+          <label for="editEmployees">Çalışan Sayısı</label>
+          <input type="number" class="form-control bg-darker text-white" id="editEmployees" [(ngModel)]="editingCompany.employees" name="employees">
+        </div>
+        <div class="form-group">
+          <label for="editRevenue">Gelir</label>
+          <input type="text" class="form-control bg-darker text-white" id="editRevenue" [(ngModel)]="editingCompany.revenue" name="revenue">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer border-0">
+      <button type="button" class="btn btn-primary" (click)="updateCompany()">Güncelle</button>
+    </div>
+  </div>
+</ng-template>
